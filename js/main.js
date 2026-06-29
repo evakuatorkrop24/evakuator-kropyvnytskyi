@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Auto-close mobile navbar when a nav-link is clicked
+  // Hide small header call button while nav is open to avoid duplicate buttons
   const navMenu = document.getElementById('navMenu');
+  const headerCallBtn = document.getElementById('header-call-btn');
   if (navMenu && typeof bootstrap !== 'undefined') {
     const bsCollapse = new bootstrap.Collapse(navMenu, { toggle: false });
     navMenu.querySelectorAll('a[href]').forEach(link => {
@@ -39,6 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navMenu.classList.contains('show')) bsCollapse.hide();
       });
     });
+    if (headerCallBtn) {
+      navMenu.addEventListener('show.bs.collapse', () => {
+        headerCallBtn.style.display = 'none';
+      });
+      navMenu.addEventListener('hidden.bs.collapse', () => {
+        headerCallBtn.style.display = '';
+      });
+    }
   }
 
   // Dynamic copyright year — keeps footer accurate after Jan 1
