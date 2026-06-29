@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://evakuator-krop.com.ua/sitemap.xml

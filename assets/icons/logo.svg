@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" role="img"
+     aria-label="Логотип Евакуатор Кропивницький">
+  <title>Евакуатор Кропивницький</title>
+
+  <!-- Truck body -->
+  <rect x="4" y="28" width="76" height="30" rx="5" fill="#FFD600"/>
+  <!-- Cab -->
+  <rect x="64" y="14" width="32" height="44" rx="5" fill="#FFD600"/>
+  <!-- Windshield -->
+  <rect x="68" y="18" width="24" height="18" rx="3" fill="#1A1A2E" opacity="0.6"/>
+  <!-- Wheels -->
+  <circle cx="22" cy="62" r="10" fill="#1A1A2E"/>
+  <circle cx="22" cy="62" r="5"  fill="#FFD600"/>
+  <circle cx="64" cy="62" r="10" fill="#1A1A2E"/>
+  <circle cx="64" cy="62" r="5"  fill="#FFD600"/>
+  <circle cx="88" cy="62" r="10" fill="#1A1A2E"/>
+  <circle cx="88" cy="62" r="5"  fill="#FFD600"/>
+  <!-- Tow hook -->
+  <rect x="0" y="40" width="8" height="6" rx="2" fill="#FF6B00"/>
+
+  <!-- Company name -->
+  <text x="112" y="40" font-family="Montserrat,Arial,sans-serif" font-size="18"
+        font-weight="700" fill="#1A1A2E">ЕВАКУАТОР</text>
+  <text x="112" y="60" font-family="Montserrat,Arial,sans-serif" font-size="13"
+        font-weight="600" fill="#FF6B00">Кропивницький</text>
+</svg>
