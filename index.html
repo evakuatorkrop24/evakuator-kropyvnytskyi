@@ -126,7 +126,7 @@
 
       <!-- Mobile: phone button + toggler -->
       <div class="d-flex d-lg-none align-items-center gap-2 ms-auto">
-        <a href="tel:+380990004114" class="btn-cta btn-sm-cta" aria-label="Зателефонувати">📞</a>
+        <a id="header-call-btn" href="tel:+380990004114" class="btn-cta btn-sm-cta" aria-label="Зателефонувати">📞</a>
         <button class="navbar-toggler border-0 p-1"
                 type="button"
                 data-bs-toggle="collapse"
@@ -940,17 +940,17 @@
 </footer>
 
   <!-- Bootstrap JS Bundle -->
-  <script defer
+  <script defer data-cfasync="false"
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
           crossorigin="anonymous"></script>
   <!-- Swiper JS -->
-  <script defer
+  <script defer data-cfasync="false"
           src="https://cdn.jsdelivr.net/npm/swiper@11.1.9/swiper-bundle.min.js"
           integrity="sha256-5zigKaoOwsOnRsnlyB0bo9zGym+XkoLO/atGJURu+Tc="
           crossorigin="anonymous"></script>
   <!-- Custom JS -->
-  <script defer src="js/main.js"></script>
+  <script defer data-cfasync="false" src="js/main.js"></script>
 
   <!-- Floating call button -->
   <a id="floating-call-btn"
