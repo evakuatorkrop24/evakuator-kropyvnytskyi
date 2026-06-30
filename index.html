@@ -688,12 +688,16 @@
       <div class="row align-items-center gy-5">
         <div class="col-12 col-lg-6 order-lg-2">
           <picture>
-            <source
-              srcset="https://picsum.photos/seed/evakabout/480/360 480w,
-                      https://picsum.photos/seed/evakabout/768/576 768w"
-              sizes="(max-width: 768px) 480px, 768px">
-            <img src="https://picsum.photos/seed/evakabout/600/450"
-                 loading="lazy" width="600" height="450"
+            <source type="image/webp"
+                    srcset="assets/images/about/about-480.webp 480w,
+                            assets/images/about/about-768.webp 768w"
+                    sizes="(max-width: 768px) 480px, 768px">
+            <img src="assets/images/about/about-768.jpg"
+                 srcset="assets/images/about/about-480.jpg 480w,
+                         assets/images/about/about-768.jpg 768w"
+                 sizes="(max-width: 768px) 480px, 768px"
+                 loading="lazy"
+                 width="768" height="576"
                  alt="Команда евакуаторного сервісу Кропивницький"
                  class="about-img img-fluid rounded-3">
           </picture>
