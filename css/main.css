@@ -204,10 +204,6 @@ a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; 
   border-radius: 8px;
 }
 
-.gallery-swiper .swiper-slide.portrait-slide img {
-  height: 400px;
-}
-
 .gallery-swiper .swiper-button-prev,
 .gallery-swiper .swiper-button-next { color: var(--color-primary-dark); }
 .gallery-swiper .swiper-pagination-bullet-active { background: var(--color-primary-dark); }
