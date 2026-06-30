@@ -88,20 +88,6 @@ npm install   # installs sharp along with other dev deps
 
 ---
 
-## How to Swap Other Content
-
-### Phone number
-Search-and-replace `+380990004114` and `+38 (099) 000-41-14` throughout all HTML files.
-
-### Logo
-Replace `assets/icons/logo.svg` with the real SVG file. Keep the filename.
-
-### Social links & text
-All social URLs and copy text are in `index.html` — search for `instagram.com` and
-`tiktok.com`.
-
----
-
 ## Deploying to Cloudflare Pages
 
 ### One-time DevOps Setup
