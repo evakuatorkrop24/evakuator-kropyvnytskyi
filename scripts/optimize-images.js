@@ -27,15 +27,21 @@ function readImages(dir) {
 
 async function resize(src, destDir, baseName, widths) {
   fs.mkdirSync(destDir, { recursive: true });
-  const meta = await sharp(src).metadata();
+  const raw = await sharp(src).metadata();
+
+  // EXIF orientations 5-8 rotate the image 90/270°, swapping width and height
+  const isRotated90 = [5, 6, 7, 8].includes(raw.orientation);
+  const displayWidth  = isRotated90 ? raw.height : raw.width;
+  const displayHeight = isRotated90 ? raw.width  : raw.height;
+
   const results = [];
 
   for (const w of widths) {
-    const opts = meta.width >= meta.height
+    const opts = displayWidth >= displayHeight
       ? { width: w }
       : { height: w };                    // portrait: interpret 'w' as height cap
 
-    const resized = sharp(src).resize(opts);
+    const resized = sharp(src).rotate().resize(opts); // .rotate() applies EXIF orientation
 
     await resized.clone().webp({ quality: QUALITY })
       .toFile(path.join(destDir, `${baseName}-${w}.webp`));
@@ -46,7 +52,7 @@ async function resize(src, destDir, baseName, widths) {
     const out = await sharp(path.join(destDir, `${baseName}-${w}.jpg`)).metadata();
     results.push({ width: out.width, height: out.height, breakpoint: w });
   }
-  return { isPortrait: meta.height > meta.width, sizes: results };
+  return { isPortrait: displayHeight > displayWidth, sizes: results };
 }
 
 function heroHTML(info) {
