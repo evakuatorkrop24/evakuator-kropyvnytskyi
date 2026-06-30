@@ -157,11 +157,26 @@
 
 <main id="main-content">
   <!-- ===== HERO ===== -->
-  <!-- STUB: replace background URL with assets/images/hero/hero.jpg when customer provides image -->
   <section id="hero" class="hero-section section-dark d-flex align-items-center"
            aria-labelledby="hero-heading">
+    <picture class="hero-bg-picture" aria-hidden="true">
+      <source type="image/webp"
+              srcset="assets/images/hero/hero-768.webp 768w,
+                      assets/images/hero/hero-1200.webp 1200w,
+                      assets/images/hero/hero-1920.webp 1920w"
+              sizes="100vw">
+      <img class="hero-bg-img"
+           src="assets/images/hero/hero-1920.jpg"
+           srcset="assets/images/hero/hero-768.jpg 768w,
+                   assets/images/hero/hero-1200.jpg 1200w,
+                   assets/images/hero/hero-1920.jpg 1920w"
+           sizes="100vw"
+           alt=""
+           width="1920" height="1440"
+           fetchpriority="high">
+    </picture>
     <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="container position-relative text-center text-md-start py-5">
+    <div class="container hero-content text-center text-md-start py-5">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-9">
           <h1 id="hero-heading" class="text-white mb-3">
