@@ -40,27 +40,61 @@ npm test
 
 ---
 
-## How to Swap Placeholder Content
+## Adding or Replacing Photos
+
+All images are optimized through `scripts/optimize-images.js` (uses [sharp](https://sharp.pixelplumbing.com/)).
+It reads source images from a gitignored staging area and outputs WebP + JPEG at multiple responsive sizes.
+
+### One-time setup
+
+```bash
+npm install   # installs sharp along with other dev deps
+```
+
+### Workflow
+
+1. **Drop source images into the staging folders** (these are gitignored — never committed):
+
+   | Folder | Contents |
+   |---|---|
+   | `assets/images/staging/hero/` | Exactly 1 landscape photo (1600×720 or wider is ideal) |
+   | `assets/images/staging/about/` | Exactly 1 photo (portrait works best in the side column) |
+   | `assets/images/staging/gallery/` | All remaining photos, named `01-photo.jpg`, `02-photo.jpg`, … so they sort in display order |
+
+2. **Run the script:**
+
+   ```bash
+   node scripts/optimize-images.js
+   ```
+
+   Output:
+   - `assets/images/hero/hero-768.{webp,jpg}`, `hero-1200.{webp,jpg}`, `hero-1920.{webp,jpg}`
+   - `assets/images/about/about-480.{webp,jpg}`, `about-768.{webp,jpg}`
+   - `assets/images/gallery/img-01-480.{webp,jpg}` … `img-NN-1200.{webp,jpg}`
+   - `assets/images/html-snippets.txt` — ready-to-paste `<picture>` HTML with correct `width`/`height` values
+
+3. **Paste the snippets into `index.html`** — the snippets file has three labelled sections (hero, about, gallery).
+
+4. **Commit the generated images** (not the staging sources):
+   ```bash
+   git add assets/images/hero/ assets/images/about/ assets/images/gallery/
+   git commit -m "feat: update real customer images"
+   ```
+
+### Notes
+- EXIF orientation is applied automatically — photos taken in portrait mode on a phone will appear upright.
+- Portrait images are detected automatically; they are cropped via `object-fit: cover` to the same card height as landscape images in the gallery carousel.
+- Quality is set to 82 for all outputs. Adjust `QUALITY` at the top of the script if needed.
+
+---
+
+## How to Swap Other Content
 
 ### Phone number
 Search-and-replace `+380990004114` and `+38 (099) 000-41-14` throughout all HTML files.
 
 ### Logo
 Replace `assets/icons/logo.svg` with the real SVG file. Keep the filename.
-
-### Hero background image
-In `css/main.css`, find the `.hero-section` rule and change the `url(...)` from the
-picsum placeholder to `url('assets/images/hero/hero.jpg')`.
-
-### Gallery photos
-1. Name your images `img-01.jpg` through `img-20.jpg` (+ WebP variants if available).
-2. Place them in `assets/images/gallery/`.
-3. In `index.html`, replace the `https://picsum.photos/seed/evakNN/...` URLs in the
-   gallery `<source srcset="...">` and `<img src="...">` attributes with local paths
-   such as `assets/images/gallery/img-01.jpg`.
-
-### About section image
-Replace the picsum URL in the About `<picture>` element with `assets/images/about/about.jpg`.
 
 ### Social links & text
 All social URLs and copy text are in `index.html` — search for `instagram.com` and
@@ -160,14 +194,17 @@ Prevents direct pushes to `main`, so every change must pass CI before reaching p
 │   └── main.css             All custom styles
 ├── js/
 │   └── main.js              Swiper init, nav interactions
+├── scripts/
+│   └── optimize-images.js   Resizes + converts source photos to WebP+JPEG (run with Node.js)
 ├── assets/
 │   ├── icons/
 │   │   ├── logo.svg         Company logo
 │   │   └── apple-touch-icon.png  iOS home-screen icon
 │   └── images/
-│       ├── hero/            Hero background (1 image)
-│       ├── gallery/         Gallery photos (20+)
-│       └── about/           About section photo (1 image)
+│       ├── hero/            Optimized hero images (hero-768/1200/1920.{webp,jpg})
+│       ├── gallery/         Optimized gallery images (img-NN-480/768/1200.{webp,jpg})
+│       ├── about/           Optimized about image (about-480/768.{webp,jpg})
+│       └── staging/         Source photos (gitignored — never committed)
 ├── tests/
 │   └── e2e/
 │       └── site.spec.js     Playwright E2E tests

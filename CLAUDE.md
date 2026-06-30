@@ -17,12 +17,13 @@ Canonical URL: `https://evakuator-krop.com.ua/`
 - **Bootstrap 5.3.8** via jsDelivr CDN (with SRI integrity hashes)
 - **Swiper 11.1.9** via CDN — one shared instance for both the reviews and gallery carousels
 - **Montserrat** Google Font (Cyrillic subset via `&display=swap`)
+- **sharp** (Node.js, devDependency) — one-shot image optimization script; not part of the served site
 - Deployed to **Cloudflare Pages** (auto-deploy on push to `main`)
 
 ## Commands
 
 ```bash
-# Install dependencies (Playwright + serve)
+# Install dependencies (Playwright + serve + sharp)
 npm install
 npx playwright install chromium
 
@@ -34,6 +35,9 @@ npm test:ui
 
 # Start local dev server manually
 npx serve . -p 3000
+
+# Optimize new customer photos (see Image Optimization section below)
+node scripts/optimize-images.js
 ```
 
 To run a single test by name:
@@ -81,6 +85,28 @@ curl -s https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css 
 ```
 
 Use `sha384-` prefix for Bootstrap, `sha256-` prefix for Swiper.
+
+## Image Optimization
+
+All site images are processed by `scripts/optimize-images.js` (Node.js + sharp). It reads source photos from a **gitignored** staging area and writes WebP + JPEG at each required breakpoint.
+
+**Staging folders** (never committed):
+- `assets/images/staging/hero/` — exactly 1 source photo
+- `assets/images/staging/about/` — exactly 1 source photo
+- `assets/images/staging/gallery/` — all gallery photos, named `01-photo.jpg`, `02-photo.jpg`, … (sort order = display order)
+
+**Output folders** (committed to git):
+- `assets/images/hero/` — `hero-768.{webp,jpg}`, `hero-1200.{webp,jpg}`, `hero-1920.{webp,jpg}`
+- `assets/images/about/` — `about-480.{webp,jpg}`, `about-768.{webp,jpg}`
+- `assets/images/gallery/` — `img-NN-480.{webp,jpg}`, `img-NN-768.{webp,jpg}`, `img-NN-1200.{webp,jpg}`
+
+**Key behaviours:**
+- EXIF orientation is applied automatically via `sharp().rotate()` — phone photos always appear upright.
+- Portrait vs. landscape is detected from post-rotation dimensions.
+- Quality is 82 for all outputs (adjust `QUALITY` constant at the top of the script).
+- After running, `assets/images/html-snippets.txt` is written with ready-to-paste `<picture>` HTML including correct `width`/`height` attributes. This file is gitignored.
+
+When adding new photos: drop into staging → run script → paste snippets into `index.html` → commit output images.
 
 ## Content Swapping
 
